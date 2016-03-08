@@ -3,6 +3,8 @@
     - @selected_labels.each do |selected_label|
       button class="btn btn-default" style="background-color:##{selected_label.color};color:##{text_color(selected_label.color)}" = selected_label.name
     | is selected. 
+    a href="https://github.com/#{repo}/issues?q=#{build_github_query(@selected_labels)}" target="_blank" = "#{count_issues(@selected_labels)} issues"
+    |  / 
     a href="/" clear
   h3 Related labels
 - else
