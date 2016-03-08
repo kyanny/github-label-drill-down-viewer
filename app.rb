@@ -3,12 +3,6 @@ require 'octokit'
 require 'slim'
 require 'active_support/all'
 require 'pp'
-require 'dotenv'
-require 'paleta'
-
-before do
-  Dotenv.load
-end
 
 helpers do
   def client
