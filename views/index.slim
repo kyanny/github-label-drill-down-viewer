@@ -10,7 +10,7 @@
 - if @labels.present?
   ul.list-unstyled
     - @labels.each do |label|
-      - next if @label&.name == label.name
+      - next if @selected_labels.map { |label| label.name }.include? label.name
       li
-        a class="btn btn-default" style="background-color:##{label.color};color:##{text_color(label.color)}" href="/?#{build_query(label)}" = label.name
-        a href="https://github.com/#{repo}/issues?q=#{build_github_query(label)}" target="_blank" issues
+        a class="btn btn-default" style="background-color:##{label.color};color:##{text_color(label.color)}" href="/?#{build_query(@selected_labels, label)}" = label.name
+        a href="https://github.com/#{repo}/issues?q=#{build_github_query(@selected_labels, label)}" target="_blank" issues

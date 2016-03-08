@@ -24,10 +24,11 @@ helpers do
 
   def build_query(*labels)
     labels.flatten!
-    _labels = labels.map { |label| "label=#{label.name}" }.join("&")
+    _labels = labels.map { |label| "label[]=#{label.name}" }.join("&")
   end
 
   def build_github_query(*labels)
+    labels.flatten!
     _labels = labels.map { |label| "label:\"#{label.name}\"" }.join(" ")
     URI.escape("is:open is:issue #{_labels}")
   end
