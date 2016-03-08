@@ -1,6 +1,7 @@
-- if @label.present?
+- if @selected_labels.present?
   h2
-    button class="btn btn-default" style="background-color:##{@label.color}" = @label.name
+    - @selected_labels.each do |selected_label|
+      button class="btn btn-default" style="background-color:##{selected_label.color};color:##{text_color(selected_label.color)}" = selected_label.name
     | is selected. 
     a href="/" clear
   h3 Related labels
@@ -11,9 +12,5 @@
     - @labels.each do |label|
       - next if @label&.name == label.name
       li
-        a class="btn btn-default" style="background-color:##{label.color}" href="/#{label.name}" = label.name
-        - if @label.present?
-          - @query = URI.escape("is:open is:issue label:#{@label.name} label:#{label.name}")
-        - else
-          - @query = URI.escape("is:open is:issue label:#{label.name}")
-        a href="https://github.com/#{@repo}/issues?q=#{@query}" target="_blank" issues
+        a class="btn btn-default" style="background-color:##{label.color};color:##{text_color(label.color)}" href="/?#{build_query(label)}" = label.name
+        a href="https://github.com/#{repo}/issues?q=#{build_github_query(label)}" target="_blank" issues
