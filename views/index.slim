@@ -13,4 +13,4 @@
       - next if @selected_labels.map { |label| label.name }.include? label.name
       li
         a class="btn btn-default" style="background-color:##{label.color};color:##{text_color(label.color)}" href="/?#{build_query(@selected_labels, label)}" = label.name
-        a href="https://github.com/#{repo}/issues?q=#{build_github_query(@selected_labels, label)}" target="_blank" issues
+        a href="https://github.com/#{repo}/issues?q=#{build_github_query(@selected_labels, label)}" target="_blank" = "#{count_issues(@selected_labels, label)} issues"

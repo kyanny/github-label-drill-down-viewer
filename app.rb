@@ -22,6 +22,14 @@ helpers do
     end
   end
 
+  def count_issues(*labels)
+    @count_issues ||= {}
+    labels.flatten!
+    return if labels.length < 2
+    _labels = labels.map { |label| label.name }.join(",")
+    client.issues(repo, labels: _labels).count
+  end
+
   def build_query(*labels)
     labels.flatten!
     _labels = labels.map { |label| "label[]=#{label.name}" }.join("&")
