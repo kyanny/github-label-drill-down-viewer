@@ -6,6 +6,7 @@ Usage
 
 ```
 $ git clone https://github.com/kyanny/github-label-drill-down-viewer.git
+$ cd github-label-drill-down-viewer
 $ bundle install
 $ export GITHUB_ACCESS_TOKEN=[your github access token]
 $ export GITHUB_REPO=rails/rails
