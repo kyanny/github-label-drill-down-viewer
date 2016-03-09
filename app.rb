@@ -17,6 +17,14 @@ helpers do
     ENV['GITHUB_REPO']
   end
 
+  def repo_link
+    "https://github.com/#{repo}"
+  end
+
+  def repo_link_tag
+    %Q!<a href="#{repo_link}" target="_blank">#{repo}</a>!
+  end
+
   def cache(key, &block)
     if $cache[key].present?
       puts "cache hit #{key}"
