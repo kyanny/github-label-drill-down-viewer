@@ -1,6 +1,8 @@
 GitHub Label Drill Down Viewer
 ==============================
 
+![untitled](https://cloud.githubusercontent.com/assets/10515/13645286/9c70a83c-e66d-11e5-9b66-a211d7a266da.gif)
+
 Usage
 -----
 
