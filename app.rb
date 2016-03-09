@@ -71,12 +71,7 @@ helpers do
   end
 
   def text_color(background_color)
-    dark_colors = %w[e11d21 eb6420 009800 006b75 207de5 0052cc 5319e7 666666 000000]
-    if background_color.in?(dark_colors)
-      'ffffff'
-    else
-      '000000'
-    end
+    background_color =~ /^[def].[def].[def].$/i ? '000' : 'fff'
   end
 end
 
