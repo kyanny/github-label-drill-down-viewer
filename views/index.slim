@@ -12,7 +12,7 @@
 - if @labels.present?
   ul.list-unstyled
     - @labels.each do |label|
-      - next if @selected_labels.map { |label| label.name }.include? label.name
+      - next if @selected_labels.map { |_label| _label.name }.include? label.name
       li
         a class="btn btn-default" style="background-color:##{label.color};color:##{text_color(label.color)}" href="/?#{build_query(@selected_labels, label)}" = label.name
         a href="https://github.com/#{repo}/issues?q=#{build_github_query(@selected_labels, label)}" target="_blank" = "#{count_issues(@selected_labels, label)} issues"

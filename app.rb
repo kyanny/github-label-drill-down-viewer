@@ -4,6 +4,10 @@ require 'slim'
 require 'active_support/all'
 require 'pp'
 
+configure do
+  $cache = {}
+end
+
 helpers do
   def client
     @client ||= Octokit::Client.new(access_token: ENV['GITHUB_ACCESS_TOKEN'])
@@ -13,12 +17,26 @@ helpers do
     ENV['GITHUB_REPO']
   end
 
+  def cache(key, &block)
+    if $cache[key].present?
+      puts "cache hit #{key}"
+      $cache[key]
+    else
+      puts "cache miss #{key}"
+      $cache[key] = yield
+    end
+  end
+
   def labels(selected_labels)
     if selected_labels.present?
       _labels = selected_labels.map { |label| label.name }.join(",")
-      @labels = client.issues(repo, labels: _labels).flat_map { |issue| issue.labels }.uniq { |label| label.name }.sort_by { |label| label.name }
+      @labels = cache(_labels) do
+        client.issues(repo, labels: _labels).flat_map { |issue| issue.labels }.uniq { |label| label.name }.sort_by { |label| label.name }
+      end
     else
-      @labels = client.labels(repo).sort_by { |label| label.name }
+      @labels = cache(_labels) do
+        client.labels(repo).sort_by { |label| label.name }
+      end
     end
   end
 
@@ -27,7 +45,9 @@ helpers do
     labels.flatten!
     return if labels.length < 2
     _labels = labels.map { |label| label.name }.join(",")
-    client.issues(repo, labels: _labels).count
+    cache("#{_labels}:count") do
+      client.issues(repo, labels: _labels).count
+    end
   end
 
   def build_query(*labels)
@@ -52,7 +72,9 @@ helpers do
 end
 
 get '/' do
-  @selected_labels = Array(params['label']).map { |label| client.label(repo, label) }
+  @selected_labels = Array(params['label']).map { |label|
+    client.label(repo, label)
+  }
   @labels = labels(@selected_labels)
   slim :index
 end
