@@ -41,6 +41,7 @@ helpers do
   end
 
   def count_issues(*labels)
+    return
     @count_issues ||= {}
     labels.flatten!
     return if labels.length < 2
